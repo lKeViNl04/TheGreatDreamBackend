@@ -1,80 +1,81 @@
-# 🌙 El Gran Sueño – Backend
+# 🌙 The Great Dream – Backend
 
-> ⚡ Este repositorio está enlazado al frontend: **[TheGreatDreamFrontend](https://github.com/lKeViNl04/TheGreatDreamFrontend)**
-
----
-
-## 🏷️ Insignias
-
-![Java](https://img.shields.io/badge/Java-21+-red?logo=openjdk)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.4-green?logo=springboot)
-![MySQL](https://img.shields.io/badge/Database-MySQL-blue?logo=mysql)
-![Maven](https://img.shields.io/badge/Build-Maven-orange?logo=apachemaven)
+> ⚡ This repository is linked to the frontend: **[TheGreatDreamFrontend](https://github.com/lKeViNl04/TheGreatDreamFrontend)**
 
 ---
 
-## 📖 Contexto
+## 🏷️ Badges
 
-Backend de **The Great Dream**, un sistema para la gestión de datos y operaciones de una comunidad cerrada.
-Expone una API REST conectada a una base de datos MySQL y se integra con el frontend.
-
----
-
-## 🛠️ Tecnologías
-
-- Java 21+
-- Spring Boot 3.5.4 (Web, Datos JPA, Validación, Seguridad, Actuador)
-- MySQL
-- Maven
-- Lombok y MapStruct
+![Java](https://img.shields.io/badge/Java-21+-red?logo=openjdk)   ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.4-green?logo=springboot) ![MySQL](https://img.shields.io/badge/Database-MySQL-blue?logo=mysql)  ![Maven](https://img.shields.io/badge/Build-Maven-orange?logo=apachemaven)  
 
 ---
 
-## ✅ Prerrequisitos
+## 📖 Context
 
-- Java 21+ instalado
-- Maven instalado
-- MySQL en ejecución
-
----
-
-## ⚙️ Ejecutar el proyecto
-
-1. Clonar el repositorio
-```bash
-git clone https://github.com/lKeViNl04/TheGreatDreamBackend.git
-cd TheGreatDreamBackend
-```
-2. Configurar src/main/resources/application.properties con las credenciales de la base de datos:
-```bash
-spring.datasource.url=jdbc:mysql://localhost:3306/thegreatdream
-spring.datasource.username=TU_NOMBRE_DE_USUARIO
-spring.datasource.password=TU_CONTRASEÑA
-spring.jpa.hibernate.ddl-auto=update
-```
-3. Iniciar el proyecto
-```bash
-mvn spring-boot:run
-```
+Backend of **The Great Dream**, a system to manage data and operations for a gated community.  
+It exposes a REST API connected to a MySQL database and integrates with the frontend.
 
 ---
 
-## 📂 Estructura
-```bash
-src/
-├── main/java/com/gatedcommunity # Controladores, Servicios, Modelos, Repositorios
-└── main/resources # Archivos de configuración
-pom.xml # Dependencias y configuración del proyecto
-```
+## 🛠️ Technologies
+
+- Java 21+  
+- Spring Boot 3.5.4 (Web, Data JPA, Validation, Security, Actuator)  
+- MySQL  
+- Maven  
+- Lombok & MapStruct  
 
 ---
 
-## 🚀 Próximos pasos
+## ✅ Prerequisites
 
-Funciones y mejoras planificadas:
+- Java 21+ installed  
+- Maven installed  
+- MySQL running  
 
-- Implementar CRUD para roles y usuarios
-- Añadir autenticación y autorización (JWT + Spring Security)
-- Añadir pruebas unitarias y de integración
-- Añadir compatibilidad con Docker para una implementación más sencilla
-- Implementar en la nube (Heroku, AWS o similar)
+---
+
+## ⚙️ Run the Project
+
+1. Clone the repo
+   ```bash
+   git clone https://github.com/lKeViNl04/TheGreatDreamBackend.git
+   cd TheGreatDreamBackend
+   ```
+2. Configure src/main/resources/application.properties with your DB credentials:
+  ```bash
+    spring.datasource.url=jdbc:mysql://localhost:3306/thegreatdream
+    spring.datasource.username=YOUR_USERNAME
+    spring.datasource.password=YOUR_PASSWORD
+    spring.jpa.hibernate.ddl-auto=update
+  ```
+3. Start the project
+  ```bash
+    mvn spring-boot:run
+  ```
+
+---
+
+## 📂 Structure
+  ```bash
+    src/
+    ├── main/java/com/gatedcommunity   # Controllers, Services, Models, Repositories
+    └── main/resources                 # Config files
+    pom.xml                             # Dependencies & project config
+  ```
+
+---
+
+## 🚀 Next Steps
+
+Planned features and improvements:
+
+ - Implement CRUD for Roles & Users
+ - Add Authentication & Authorization (JWT + Spring Security)
+ - Add Unit & Integration Tests
+ - Add Docker support for easier deployment
+ - Deploy to cloud (Heroku, AWS, or similar)
+
+
+
+
