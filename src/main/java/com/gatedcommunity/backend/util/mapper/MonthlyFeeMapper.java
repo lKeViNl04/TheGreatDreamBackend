@@ -1,4 +1,4 @@
-package com.gatedcommunity.backend.mapper;
+package com.gatedcommunity.backend.util.mapper;
 import com.gatedcommunity.backend.entity.dto.MonthlyFeeDTO;
 import com.gatedcommunity.backend.entity.MonthlyFee;
 import org.mapstruct.Mapper;
@@ -10,7 +10,8 @@ public interface MonthlyFeeMapper {
     @Mapping(source = "status.label", target ="status")
     MonthlyFeeDTO toDTO(MonthlyFee monthlyFee);
 
-    @Mapping(target = "status", expression = "java(com.gatedcommunity.backend.entity.enums.FeeStatus.fromLabel(dto.status))")
-    @Mapping(target = "member.status", expression = "java(com.gatedcommunity.backend.entity.enums.MemberStatus.fromLabel(memberDTO.status))")
+    @Mapping(source = "cashBoxId", target = "cashBox.id")
+    @Mapping(target = "status", expression = "java(com.gatedcommunity.backend.entity.enums.FeeStatus.fromLabel(dto.getStatus()))")
+    @Mapping(target = "member.status", expression = "java(com.gatedcommunity.backend.entity.enums.MemberStatus.fromLabel(memberDTO.getStatus()))")
     MonthlyFee toEntity(MonthlyFeeDTO dto);
 }

@@ -1,4 +1,4 @@
-package com.gatedcommunity.backend.config;
+package com.gatedcommunity.backend.util.config;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;

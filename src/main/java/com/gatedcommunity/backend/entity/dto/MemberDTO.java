@@ -1,12 +1,13 @@
 package com.gatedcommunity.backend.entity.dto;
 
-import com.gatedcommunity.backend.entity.enums.MemberStatus;
+import lombok.Data;
 
+@Data
 public class MemberDTO {
-    public Long id;
-    public String firstName;
-    public String lastName;
-    public String slots;
-    public String status;
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String slot;
+    private String status;
 }
 

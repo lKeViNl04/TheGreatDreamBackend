@@ -1,13 +1,16 @@
 package com.gatedcommunity.backend.entity.dto;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 
+@Data
 public class MonthlyFeeDTO {
-    public Long id; // opcional si es POST
-    public Long cashBoxId;
-    public MemberDTO member;
-    public BigDecimal assignedAmount;
-    public BigDecimal paid;
-    public String status;
+    private Long id;
+    private Long cashBoxId;
+    private MemberDTO member;
+    private BigDecimal assignedAmount;
+    private BigDecimal paid;
+    private String status;
 }
 

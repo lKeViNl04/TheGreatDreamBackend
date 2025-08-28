@@ -2,38 +2,31 @@ package com.gatedcommunity.backend.entity;
 import com.gatedcommunity.backend.entity.converters.FeeStatusConverter;
 import com.gatedcommunity.backend.entity.enums.FeeStatus;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "cuota_socio_cajachica")
-@Getter
-@Setter
+@Table(name = "cashbox_fee")
+@Data
 public class MonthlyFee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cuota")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_caja_chica", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_cashbox", nullable = false)
     private CashBox cashBox;
 
-    @ManyToOne
-    @JoinColumn(name = "id_socio", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_member", nullable = false)
     private Member member;
 
-    @Column(name = "monto_asignado")
-    private BigDecimal assignedAmount;
+    private BigDecimal assignedAmount = BigDecimal.ZERO;
+    private BigDecimal paid = BigDecimal.ZERO;
 
-    @Column(name = "abonado")
-    private BigDecimal paid;
-
-    @Column(name = "estado")
     @Convert(converter = FeeStatusConverter.class)
-    private FeeStatus status;
+    private FeeStatus status = FeeStatus.UNPAID;
 
 }

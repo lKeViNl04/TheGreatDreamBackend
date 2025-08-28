@@ -4,7 +4,7 @@ import com.gatedcommunity.backend.entity.dto.MonthlyFeeDTO;
 import com.gatedcommunity.backend.entity.MonthlyFee;
 import com.gatedcommunity.backend.entity.enums.FeeStatus;
 import com.gatedcommunity.backend.exception.ResourceNotFoundException;
-import com.gatedcommunity.backend.mapper.MonthlyFeeMapper;
+import com.gatedcommunity.backend.util.mapper.MonthlyFeeMapper;
 import com.gatedcommunity.backend.repository.CashBoxRepository;
 import com.gatedcommunity.backend.repository.MemberRepository;
 import com.gatedcommunity.backend.repository.MonthlyFeeRepository;
@@ -12,7 +12,6 @@ import com.gatedcommunity.backend.service.interfaces.MonthlyFeeService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MonthlyFeeServiceImpl implements MonthlyFeeService {
@@ -33,22 +32,37 @@ public class MonthlyFeeServiceImpl implements MonthlyFeeService {
         this.cashBoxRepository = cashBoxRepository;
         this.monthlyFeeMapper = monthlyFeeMapper;
     }
+
     //
     private void setMemberFromDTO(MonthlyFee fee, MonthlyFeeDTO dto) {
-        if (dto.member != null && dto.member.id != null) {
-            fee.setMember(memberRepository.findById(dto.member.id)
+        if (dto.getMember() != null && dto.getMember().getId() != null) {
+            fee.setMember(memberRepository.findById(dto.getMember().getId())
                     .orElseThrow(() -> new ResourceNotFoundException(
-                            "Socio no encontrado con ID: " + dto.member.id)));
+                            "Member not found with ID:" + dto.getMember().getId())));
         }
     }
 
     private void setCashBoxFromDTO(MonthlyFee fee, MonthlyFeeDTO dto) {
-        if (dto.cashBoxId != null ) {
-            fee.setCashBox(cashBoxRepository.findById(dto.cashBoxId)
+        if (dto.getCashBoxId() != null) {
+            fee.setCashBox(cashBoxRepository.findById(dto.getCashBoxId())
                     .orElseThrow(() -> new ResourceNotFoundException(
-                            "Caja chica no encontrada con ID: " + dto.cashBoxId)));
+                            "Cashbox not found with ID:" + dto.getCashBoxId())));
         }
     }
+
+    private MonthlyFee findMonthlyFeeById(Long id) {
+        return monthlyFeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Monthly fee not found with ID:" + id));
+    }
+
+    private void updateFromDTO(MonthlyFee fee, MonthlyFeeDTO dto) {
+        fee.setAssignedAmount(dto.getAssignedAmount());
+        fee.setPaid(dto.getPaid());
+        fee.setStatus(FeeStatus.fromLabel(dto.getStatus()));
+        setMemberFromDTO(fee, dto);
+        setCashBoxFromDTO(fee, dto);
+    }
+
 
     // ---- Métodos de servicio ----
     @Override
@@ -56,43 +70,31 @@ public class MonthlyFeeServiceImpl implements MonthlyFeeService {
         return monthlyFeeRepository.findAll()
                 .stream()
                 .map(monthlyFeeMapper::toDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
     public MonthlyFeeDTO getById(Long id) {
-        MonthlyFee fee = monthlyFeeRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Cuota no encontrada con ID: " + id));
-        return monthlyFeeMapper.toDTO(fee);
+        return monthlyFeeMapper.toDTO(findMonthlyFeeById(id));
     }
 
     @Override
     public MonthlyFeeDTO create(MonthlyFeeDTO dto) {
         MonthlyFee fee = monthlyFeeMapper.toEntity(dto);
-        setMemberFromDTO(fee, dto);
-        setCashBoxFromDTO(fee, dto);
+        updateFromDTO(fee, dto);
         return monthlyFeeMapper.toDTO(monthlyFeeRepository.save(fee));
     }
 
     @Override
     public MonthlyFeeDTO update(Long id, MonthlyFeeDTO dto) {
-        MonthlyFee existing = monthlyFeeRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Cuota no encontrada con ID: " + id));
-        existing.setAssignedAmount(dto.assignedAmount);
-        existing.setPaid(dto.paid);
-        existing.setStatus(FeeStatus.fromLabel(dto.status));
-        setMemberFromDTO(existing, dto);
-        setCashBoxFromDTO(existing, dto);
-        return monthlyFeeMapper.toDTO(monthlyFeeRepository.save(existing));
+        MonthlyFee fee = findMonthlyFeeById(id);
+        updateFromDTO(fee, dto);
+        return monthlyFeeMapper.toDTO(monthlyFeeRepository.save(fee));
     }
 
     @Override
     public void delete(Long id) {
-        if (!monthlyFeeRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Cuota no encontrada con ID: " + id);
-        }
+        findMonthlyFeeById(id);
         monthlyFeeRepository.deleteById(id);
     }
 }

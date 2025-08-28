@@ -1,4 +1,4 @@
-package com.gatedcommunity.backend.config;
+package com.gatedcommunity.backend.util.config;
 
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;

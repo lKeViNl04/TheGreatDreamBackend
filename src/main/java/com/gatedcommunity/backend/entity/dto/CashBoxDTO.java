@@ -1,12 +1,15 @@
 package com.gatedcommunity.backend.entity.dto;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 
+@Data
 public class CashBoxDTO {
-    public Long id;
-    public Integer month;
-    public Integer year;
-    public BigDecimal  amountCollected;
-    public BigDecimal totalSpent;
-    public BigDecimal  balance;
+    private Long id;
+    private Integer month;
+    private Integer year;
+    private BigDecimal  totalCollected;
+    private BigDecimal totalSpent;
+    private BigDecimal  totalBalance;
 }

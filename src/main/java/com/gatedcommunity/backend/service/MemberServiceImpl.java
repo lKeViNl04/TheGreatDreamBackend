@@ -5,13 +5,12 @@ import com.gatedcommunity.backend.entity.dto.MemberDTO;
 import com.gatedcommunity.backend.entity.Member;
 import com.gatedcommunity.backend.entity.enums.MemberStatus;
 import com.gatedcommunity.backend.exception.ResourceNotFoundException;
-import com.gatedcommunity.backend.mapper.MemberMapper;
+import com.gatedcommunity.backend.util.mapper.MemberMapper;
 import com.gatedcommunity.backend.repository.MemberRepository;
 import com.gatedcommunity.backend.service.interfaces.MemberService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -24,46 +23,49 @@ public class MemberServiceImpl implements MemberService {
         this.memberMapper = memberMapper;
     }
 
+    private Member findMemberById(Long id) {
+        return memberRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Member not found with ID: " + id)
+        );
+    }
+
+    private void updateFromDTO(Member member, MemberDTO dto) {
+        member.setFirstName(dto.getFirstName());
+        member.setLastName(dto.getLastName());
+        member.setSlot(dto.getSlot());
+        member.setStatus(MemberStatus.fromLabel(dto.getStatus()));
+    }
+
     //Method implement
     @Override
     public List<MemberDTO> getAll() {
         return memberRepository.findAll()
                 .stream()
                 .map(memberMapper::toDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
     public MemberDTO getById(Long id) {
-        Member member = memberRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Socio no encontrado con ID: " + id));
-        return memberMapper.toDTO(member);
+        return memberMapper.toDTO(findMemberById(id));
     }
 
     @Override
     public MemberDTO create(MemberDTO dto) {
-        Member member = memberMapper.toEntity(dto);
-        Member saved = memberRepository.save(member);
-        return memberMapper.toDTO(saved);
+        return memberMapper.toDTO(memberRepository.save(memberMapper.toEntity(dto)));
     }
 
     @Override
     public MemberDTO update(Long id, MemberDTO dto) {
-        Member existing = memberRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Socio no encontrado con ID: " + id));
-        existing.setFirstName(dto.firstName);
-        existing.setLastName(dto.lastName);
-        existing.setSlots(dto.slots);
-        existing.setStatus(MemberStatus.fromLabel(dto.status));
-        return memberMapper.toDTO(memberRepository.save(existing));
+        Member member = findMemberById(id);
+        updateFromDTO(member, dto);
+        return memberMapper.toDTO(memberRepository.save(member));
     }
 
 
     @Override
     public void delete(Long id) {
-        if (!memberRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Socio no encontrado con ID: " + id);
-        }
+        findMemberById(id);
         memberRepository.deleteById(id);
     }
 

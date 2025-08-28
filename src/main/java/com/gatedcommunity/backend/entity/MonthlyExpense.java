@@ -1,31 +1,25 @@
 package com.gatedcommunity.backend.entity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "gasto_mes_cajachica")
-@Getter
-@Setter
+@Table(name = "cashbox_expense")
+@Data
 public class MonthlyExpense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_gasto_mes")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_caja_chica")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_cashbox", nullable = false)
     private CashBox cashBox;
 
-    @Column(name = "descripcion")
-    private String description;
+    private String description = "New Description Expense";
 
-    @Column(name = "monto")
-    private BigDecimal amount;
+    private BigDecimal amount = null;
 
-    @Column(name = "Fecha")
-    private LocalDate date;
+    private LocalDate date = null;
 }

@@ -1,4 +1,4 @@
-package com.gatedcommunity.backend.mapper;
+package com.gatedcommunity.backend.util.mapper;
 import com.gatedcommunity.backend.entity.dto.MemberDTO;
 import com.gatedcommunity.backend.entity.Member;
 import org.mapstruct.Mapper;
@@ -9,6 +9,6 @@ public interface MemberMapper {
     @Mapping(source = "status.label", target = "status")
     MemberDTO toDTO(Member entity);
 
-    @Mapping(target = "status", expression = "java(com.gatedcommunity.backend.entity.enums.MemberStatus.fromLabel(dto.status))")
+    @Mapping(target = "status", expression = "java(com.gatedcommunity.backend.entity.enums.MemberStatus.fromLabel(dto.getStatus()))")
     Member toEntity(MemberDTO dto);
 }

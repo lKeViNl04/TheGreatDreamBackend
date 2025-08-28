@@ -1,34 +1,28 @@
 package com.gatedcommunity.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+
 
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "caja_chica")
-@Getter
-@Setter
+@Table(name = "cashbox")
+@Data
 public class CashBox {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_caja_chica")
     private Long id;
-
-    @Column(name = "mes")
     private Integer month;
-
-    @Column(name = "anio")
     private Integer year;
 
-    @Column(name = "monto_recaudado")
-    private BigDecimal amountCollected;
+    @Column(nullable = false)
+    private BigDecimal totalCollected = BigDecimal.ZERO;
 
-    @Column(name = "gasto_total")
-    private BigDecimal totalSpent;
+    @Column(nullable = false)
+    private BigDecimal totalSpent = BigDecimal.ZERO;
 
-    @Column(name = "saldo")
-    private BigDecimal  balance;
+    @Column(nullable = false)
+    private BigDecimal  totalBalance = BigDecimal.ZERO;
 }
