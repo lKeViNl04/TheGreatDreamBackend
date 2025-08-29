@@ -66,6 +66,25 @@ It exposes a REST API connected to a MySQL database and integrates with the fron
 
 ---
 
+---
+
+## 🆕 Recent Updates
+
+Latest improvements in the backend:
+
+- Refactored project structure for better modularity:
+  - Introduced packages: `mapper`, `repository`, `service`, `util`.
+- Added `database` folder with SQL scripts:
+  - `gatedcommunity.sql` – main database schema
+  - `date_test.sql` – test data
+  - `triggers.sql` – database triggers
+- Implemented services for main entities:
+  - `CashBoxServiceImpl`, `MemberServiceImpl`, `MonthlyExpenseServiceImpl`, `MonthlyFeeServiceImpl`.
+- Added `FeeCalculator` to centralize fee-related calculations.
+
+
+---
+
 ## 🚀 Next Steps
 
 Planned features and improvements:
